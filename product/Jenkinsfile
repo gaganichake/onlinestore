@@ -1,0 +1,10 @@
+pipeline {
+    agent any
+    stages {
+        stage('Build') {
+            steps {
+                sh 'docker build -t onlinestore/product:SNAPSHOT-0.1.0 .'
+            }
+        }
+    }
+}

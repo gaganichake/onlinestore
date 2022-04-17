@@ -1,0 +1,26 @@
+package com.onlinestore.product;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+
+@SpringBootApplication
+public class RedisConfig {
+
+	private static final Logger LOGGER = LoggerFactory.getLogger(MessagingRedisApplication.class);
+
+  @Bean
+  public JedisConnectionFactory redisConnectionFactory() {
+
+    RedisStandaloneConfiguration config = new RedisStandaloneConfiguration("server", 6379);
+    return new JedisConnectionFactory(config);
+  }
+
+  // inject the template as ListOperations
+@Resource(name="redisTemplate")
+private ListOperations<String, String> listOps;
+
+public void addLink(String userId, URL url) {
+  listOps.leftPush(userId, url.toExternalForm());
+}
+}
